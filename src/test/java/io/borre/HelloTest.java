@@ -1,5 +1,6 @@
 package io.borre;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,10 +19,12 @@ class HelloTest {
 
   @Test
   public void testHi() {
+    ArrayList<FlushData> flushData = new ArrayList<>();
+    flushData.add(new FlushData(Address.DEFAULT, new Uint256(2),  Bytes32.DEFAULT));
     List<Type> inputParameters = Arrays.asList(
         new org.web3j.abi.datatypes.DynamicArray<FlushData>(
             FlushData.class,
-            Collections.emptyList()
+            flushData
         )
     );
     List<TypeReference<?>> outParameters = Collections.emptyList();
@@ -32,7 +35,7 @@ class HelloTest {
     );
     String encoded = FunctionEncoder.encode(function);
     System.out.println(encoded);
-    assertEquals("0x61acecc4", encoded.substring(0, 10));
+    assertEquals("0x51acecc4", encoded.substring(0, 10));
     System.out.println("hi test");
   }
 
@@ -46,6 +49,13 @@ class HelloTest {
       this.token = flushData.token;
       this.version = flushData.version;
       this.salt = flushData.salt;
+    }
+
+    public FlushData(Address token, Uint256 version, Bytes32 salt) {
+      super(token, version, salt);
+      this.token = token;
+      this.version = version;
+      this.salt = salt;
     }
   }
 }
