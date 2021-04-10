@@ -30,7 +30,9 @@ class HelloTest {
         inputParameters,
         outParameters
     );
-    System.out.println(FunctionEncoder.encode(function));
+    String encoded = FunctionEncoder.encode(function);
+    System.out.println(encoded);
+    assertEquals("0x61acecc4", encoded.substring(0, 10));
     System.out.println("hi test");
   }
 
